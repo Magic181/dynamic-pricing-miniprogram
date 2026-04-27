@@ -1,0 +1,16 @@
+{
+  "pages": [
+    "pages/index/index",
+    "pages/example/index"
+  ],
+  "window": {
+    "backgroundColor": "#EEF3F1",
+    "backgroundTextStyle": "light",
+    "navigationBarBackgroundColor": "#EEF3F1",
+    "navigationBarTitleText": "动态定价系统",
+    "navigationBarTextStyle": "black"
+  },
+  "sitemapLocation": "sitemap.json",
+  "style": "v2",
+  "lazyCodeLoading": "requiredComponents"
+}

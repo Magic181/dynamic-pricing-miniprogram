@@ -1,0 +1,283 @@
+page {
+  background: #eef3f1;
+  color: #14211f;
+}
+
+.page {
+  box-sizing: border-box;
+  min-height: 100vh;
+  padding: 36rpx 28rpx 64rpx;
+}
+
+.header {
+  display: flex;
+  justify-content: space-between;
+  align-items: flex-start;
+  margin-bottom: 26rpx;
+}
+
+.eyebrow {
+  display: inline-flex;
+  padding: 8rpx 16rpx;
+  border: 1rpx solid rgba(20, 33, 31, 0.18);
+  border-radius: 6rpx;
+  color: #156f74;
+  font-size: 22rpx;
+  font-weight: 600;
+}
+
+.title {
+  margin-top: 18rpx;
+  font-size: 46rpx;
+  line-height: 1.2;
+  font-weight: 700;
+  letter-spacing: 0;
+}
+
+.subtitle {
+  margin-top: 14rpx;
+  color: #60716e;
+  font-size: 26rpx;
+  line-height: 1.55;
+}
+
+.price-panel,
+.section {
+  box-sizing: border-box;
+  width: 100%;
+  border: 1rpx solid rgba(20, 33, 31, 0.08);
+  border-radius: 8rpx;
+  background: #ffffff;
+  box-shadow: 0 16rpx 44rpx rgba(17, 43, 39, 0.08);
+}
+
+.price-panel {
+  padding: 30rpx;
+  margin-bottom: 22rpx;
+  background: #123b3d;
+  color: #ffffff;
+}
+
+.panel-label {
+  color: rgba(255, 255, 255, 0.7);
+  font-size: 24rpx;
+}
+
+.price-row {
+  display: flex;
+  align-items: baseline;
+  margin-top: 8rpx;
+}
+
+.currency {
+  font-size: 34rpx;
+  font-weight: 600;
+}
+
+.price {
+  margin-left: 8rpx;
+  font-size: 76rpx;
+  line-height: 1;
+  font-weight: 800;
+}
+
+.metrics {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: 14rpx;
+  margin-top: 28rpx;
+}
+
+.metric {
+  min-width: 0;
+  padding: 18rpx 14rpx;
+  border-radius: 6rpx;
+  background: rgba(255, 255, 255, 0.1);
+}
+
+.metric-value,
+.metric-label {
+  display: block;
+}
+
+.metric-value {
+  overflow-wrap: anywhere;
+  font-size: 25rpx;
+  font-weight: 700;
+}
+
+.metric-label {
+  margin-top: 8rpx;
+  color: rgba(255, 255, 255, 0.68);
+  font-size: 21rpx;
+}
+
+.section {
+  padding: 26rpx;
+  margin-top: 22rpx;
+}
+
+.section-title {
+  margin-bottom: 20rpx;
+  font-size: 31rpx;
+  font-weight: 700;
+}
+
+.section-head {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+}
+
+.action-row {
+  display: flex;
+  gap: 12rpx;
+}
+
+.field {
+  min-width: 0;
+  margin-top: 16rpx;
+}
+
+.label {
+  display: block;
+  color: #687976;
+  font-size: 23rpx;
+}
+
+.input {
+  box-sizing: border-box;
+  width: 100%;
+  height: 78rpx;
+  margin-top: 10rpx;
+  padding: 0 20rpx;
+  border: 1rpx solid #d9e2df;
+  border-radius: 6rpx;
+  background: #f8fbfa;
+  color: #14211f;
+  font-size: 28rpx;
+}
+
+.grid {
+  display: grid;
+  grid-template-columns: repeat(2, minmax(0, 1fr));
+  gap: 14rpx;
+}
+
+.slider-card {
+  padding: 18rpx 0 4rpx;
+  border-bottom: 1rpx solid #edf1ef;
+}
+
+.slider-head {
+  display: flex;
+  justify-content: space-between;
+  color: #263936;
+  font-size: 27rpx;
+  font-weight: 600;
+}
+
+.slider-value {
+  color: #156f74;
+}
+
+.picker-row {
+  margin-top: 18rpx;
+}
+
+.picker {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  min-height: 78rpx;
+  padding: 0 20rpx;
+  margin-top: 14rpx;
+  border: 1rpx solid #d9e2df;
+  border-radius: 6rpx;
+  background: #f8fbfa;
+  color: #172724;
+  font-size: 27rpx;
+}
+
+.scenario-row {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: 14rpx;
+}
+
+.scenario,
+.copy-btn {
+  height: 72rpx;
+  border-radius: 6rpx;
+  background: #156f74;
+  color: #ffffff;
+  font-size: 26rpx;
+  line-height: 72rpx;
+}
+
+.copy-btn {
+  width: 120rpx;
+  height: 64rpx;
+  margin: 0;
+  line-height: 64rpx;
+}
+
+.ghost {
+  border: 1rpx solid #156f74;
+  background: #ffffff;
+  color: #156f74;
+}
+
+.range {
+  margin-bottom: 16rpx;
+  color: #156f74;
+  font-size: 25rpx;
+  font-weight: 700;
+}
+
+.reason {
+  padding: 16rpx 0;
+  border-top: 1rpx solid #edf1ef;
+  color: #344642;
+  font-size: 26rpx;
+  line-height: 1.45;
+}
+
+.json-box {
+  white-space: pre-wrap;
+  overflow-wrap: anywhere;
+  padding: 20rpx;
+  border-radius: 6rpx;
+  background: #0f1f1d;
+  color: #d6ece6;
+  font-size: 22rpx;
+  line-height: 1.5;
+}
+
+.history-item {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 16rpx;
+  padding: 18rpx 0;
+  border-top: 1rpx solid #edf1ef;
+}
+
+.history-title {
+  color: #14211f;
+  font-size: 27rpx;
+  font-weight: 700;
+}
+
+.history-meta {
+  margin-top: 8rpx;
+  color: #687976;
+  font-size: 22rpx;
+}
+
+.history-price {
+  flex-shrink: 0;
+  color: #156f74;
+  font-size: 30rpx;
+  font-weight: 800;
+}
