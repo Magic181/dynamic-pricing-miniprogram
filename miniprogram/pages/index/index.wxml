@@ -49,6 +49,7 @@
   <view wx:if="{{activeTab === 'controls'}}">
     <view class="section">
       <view class="section-title">商品基础</view>
+      <view class="section-subtitle">定价锚点决定最低利润保护和市场跟价范围。</view>
       <view class="field">
         <text class="label">商品名称</text>
         <input class="input" value="{{form.productName}}" placeholder="例如：鲜花套餐" bindinput="onTextInput" />
@@ -75,6 +76,7 @@
 
     <view class="section">
       <view class="section-title">实时因子</view>
+      <view class="section-subtitle">根据需求与库存变化，动态调整建议售价。</view>
       <view class="slider-card">
         <view class="slider-head">
           <text>需求热度</text>
@@ -102,6 +104,7 @@
 
     <view class="section">
       <view class="section-title">快速场景</view>
+      <view class="section-subtitle">一键套用常见运营状态。</view>
       <view class="scenario-grid">
         <button class="scenario" data-type="peak" bindtap="applyScenario">晚高峰</button>
         <button class="scenario" data-type="clearance" bindtap="applyScenario">清库存</button>
