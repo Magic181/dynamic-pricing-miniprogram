@@ -105,10 +105,23 @@
     <view class="section">
       <view class="section-title">快速场景</view>
       <view class="section-subtitle">一键套用常见运营状态。</view>
-      <view class="scenario-grid">
-        <button class="scenario" data-type="peak" bindtap="applyScenario">晚高峰</button>
-        <button class="scenario" data-type="clearance" bindtap="applyScenario">清库存</button>
-        <button class="scenario" data-type="holiday" bindtap="applyScenario">节假日</button>
+      <view class="scenario-list">
+        <view
+          class="scenario-card {{currentScenario === item.key ? 'selected' : ''}} {{item.tone}}"
+          wx:for="{{scenarioOptions}}"
+          wx:key="key"
+          data-type="{{item.key}}"
+          bindtap="applyScenario"
+          hover-class="scenario-press"
+          hover-stay-time="80"
+        >
+          <view class="scenario-mark"></view>
+          <view class="scenario-copy">
+            <view class="scenario-title">{{item.title}}</view>
+            <view class="scenario-desc">{{item.desc}}</view>
+          </view>
+          <view class="scenario-state">{{currentScenario === item.key ? '已应用' : '应用'}}</view>
+        </view>
       </view>
     </view>
   </view>

@@ -15,6 +15,26 @@ const defaultForm = {
 };
 
 const defaultPlan = pricingEngine.calculatePrice(defaultForm);
+const scenarioOptions = [
+  {
+    key: "peak",
+    title: "晚高峰",
+    desc: "需求高、库存紧，建议溢价",
+    tone: "blue",
+  },
+  {
+    key: "clearance",
+    title: "清库存",
+    desc: "库存高、需求弱，促进转化",
+    tone: "green",
+  },
+  {
+    key: "holiday",
+    title: "节假日",
+    desc: "预约场景，捕捉峰值收益",
+    tone: "amber",
+  },
+];
 
 Page({
   data: {
@@ -25,6 +45,8 @@ Page({
     plan: defaultPlan,
     savedPlans: [],
     activeTab: "controls",
+    currentScenario: "custom",
+    scenarioOptions,
   },
 
   onLoad() {
@@ -44,12 +66,14 @@ Page({
     const field = e.currentTarget.dataset.field;
     const patch = {};
     patch[`form.${field}`] = e.detail.value;
+    patch.currentScenario = "custom";
     this.setData(patch, () => this.refreshPrice());
   },
 
   onTextInput(e) {
     this.setData({
       "form.productName": e.detail.value,
+      currentScenario: "custom",
     }, () => this.refreshPrice());
   },
 
@@ -57,6 +81,7 @@ Page({
     const field = e.currentTarget.dataset.field;
     const patch = {};
     patch[`form.${field}`] = e.detail.value;
+    patch.currentScenario = "custom";
     this.setData(patch, () => this.refreshPrice());
   },
 
@@ -64,6 +89,7 @@ Page({
     const field = e.currentTarget.dataset.field;
     const patch = {};
     patch[`form.${field}`] = Number(e.detail.value);
+    patch.currentScenario = "custom";
     this.setData(patch, () => this.refreshPrice());
   },
 
@@ -91,12 +117,14 @@ Page({
 
     this.setData({
       form: Object.assign({}, this.data.form, scenarios[e.currentTarget.dataset.type]),
+      currentScenario: e.currentTarget.dataset.type,
     }, () => this.refreshPrice());
   },
 
   resetForm() {
     this.setData({
       form: Object.assign({}, defaultForm),
+      currentScenario: "custom",
     }, () => this.refreshPrice());
   },
 
