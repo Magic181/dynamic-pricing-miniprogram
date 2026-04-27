@@ -1,133 +1,150 @@
 <view class="page">
-  <view class="header">
+  <view class="topbar">
     <view>
-      <view class="eyebrow">个人开发版</view>
-      <view class="title">微信小程序动态定价系统</view>
-      <view class="subtitle">根据成本、竞品价、库存、需求、时段和会员身份实时生成建议售价。</view>
+      <view class="caption">Dynamic Pricing</view>
+      <view class="title">动态定价</view>
     </view>
+    <button class="icon-button" bindtap="resetForm">重置</button>
   </view>
 
-  <view class="price-panel">
-    <view class="panel-label">建议售价</view>
-    <view class="price-row">
+  <view class="hero-card">
+    <view class="hero-meta">
+      <text>{{plan.productName}}</text>
+      <text>{{plan.labels.timeScene}} · {{plan.labels.channel}}</text>
+    </view>
+    <view class="price-line">
       <text class="currency">¥</text>
-      <text class="price">{{result.suggestedPrice}}</text>
+      <text class="price">{{plan.output.suggestedPrice}}</text>
     </view>
-    <view class="metrics">
-      <view class="metric">
-        <text class="metric-value">¥{{result.profit}}</text>
-        <text class="metric-label">单件利润</text>
-      </view>
-      <view class="metric">
-        <text class="metric-value">{{result.margin}}%</text>
-        <text class="metric-label">利润率</text>
-      </view>
-      <view class="metric">
-        <text class="metric-value">¥{{result.expectedRevenue}}</text>
-        <text class="metric-label">预估收入</text>
-      </view>
+    <view class="price-note">
+      较基准价 {{plan.output.baseDelta}}% ｜ 保护价 ¥{{plan.output.minPrice}} - 上限价 ¥{{plan.output.maxPrice}}
+    </view>
+    <view class="hero-actions">
+      <button class="primary-button" bindtap="savePricing">保存方案</button>
+      <button class="secondary-button" bindtap="copyPlan">复制摘要</button>
     </view>
   </view>
 
-  <view class="section">
-    <view class="section-title">商品与价格</view>
-    <view class="field">
-      <text class="label">商品名称</text>
-      <input class="input" value="{{form.productName}}" placeholder="例如：鲜花套餐" bindinput="onTextInput" />
+  <view class="metric-grid">
+    <view class="metric-card">
+      <text class="metric-value">¥{{plan.output.profit}}</text>
+      <text class="metric-label">单件利润</text>
     </view>
-    <view class="grid">
-      <view class="field">
-        <text class="label">成本</text>
-        <input class="input" type="digit" data-field="cost" value="{{form.cost}}" bindinput="onNumberInput" />
-      </view>
-      <view class="field">
-        <text class="label">基准价</text>
-        <input class="input" type="digit" data-field="basePrice" value="{{form.basePrice}}" bindinput="onNumberInput" />
-      </view>
-      <view class="field">
-        <text class="label">竞品价</text>
-        <input class="input" type="digit" data-field="competitorPrice" value="{{form.competitorPrice}}" bindinput="onNumberInput" />
-      </view>
-      <view class="field">
-        <text class="label">目标毛利率 %</text>
-        <input class="input" type="number" data-field="targetMargin" value="{{form.targetMargin}}" bindinput="onNumberInput" />
-      </view>
+    <view class="metric-card">
+      <text class="metric-value">{{plan.output.margin}}%</text>
+      <text class="metric-label">利润率</text>
+    </view>
+    <view class="metric-card">
+      <text class="metric-value">¥{{plan.output.expectedRevenue}}</text>
+      <text class="metric-label">预估收入</text>
     </view>
   </view>
 
-  <view class="section">
-    <view class="section-title">实时因素</view>
-    <view class="slider-card">
-      <view class="slider-head">
-        <text>需求热度</text>
-        <text class="slider-value">{{form.demand}}</text>
-      </view>
-      <slider min="0" max="100" step="1" value="{{form.demand}}" activeColor="#156f74" backgroundColor="#d9e2df" block-size="22" data-field="demand" bindchanging="onSliderChange" bindchange="onSliderChange" />
-    </view>
-    <view class="slider-card">
-      <view class="slider-head">
-        <text>库存水平</text>
-        <text class="slider-value">{{form.inventory}}</text>
-      </view>
-      <slider min="0" max="100" step="1" value="{{form.inventory}}" activeColor="#156f74" backgroundColor="#d9e2df" block-size="22" data-field="inventory" bindchanging="onSliderChange" bindchange="onSliderChange" />
-    </view>
+  <view class="tabbar">
+    <view class="tab {{activeTab === 'controls' ? 'active' : ''}}" data-key="controls" bindtap="switchTab">调价</view>
+    <view class="tab {{activeTab === 'insight' ? 'active' : ''}}" data-key="insight" bindtap="switchTab">解释</view>
+    <view class="tab {{activeTab === 'history' ? 'active' : ''}}" data-key="history" bindtap="switchTab">记录</view>
+  </view>
 
-    <view class="picker-row">
-      <picker mode="selector" range="{{channelOptions}}" value="{{form.channelIndex}}" data-field="channelIndex" bindchange="onPickerChange">
-        <view class="picker">
-          <text class="label">销售渠道</text>
-          <text>{{channelLabel}}</text>
+  <view wx:if="{{activeTab === 'controls'}}">
+    <view class="section">
+      <view class="section-title">商品基础</view>
+      <view class="field">
+        <text class="label">商品名称</text>
+        <input class="input" value="{{form.productName}}" placeholder="例如：鲜花套餐" bindinput="onTextInput" />
+      </view>
+      <view class="form-grid">
+        <view class="field">
+          <text class="label">成本</text>
+          <input class="input" type="digit" data-field="cost" value="{{form.cost}}" bindinput="onNumberInput" />
         </view>
+        <view class="field">
+          <text class="label">基准价</text>
+          <input class="input" type="digit" data-field="basePrice" value="{{form.basePrice}}" bindinput="onNumberInput" />
+        </view>
+        <view class="field">
+          <text class="label">竞品价</text>
+          <input class="input" type="digit" data-field="competitorPrice" value="{{form.competitorPrice}}" bindinput="onNumberInput" />
+        </view>
+        <view class="field">
+          <text class="label">目标毛利率 %</text>
+          <input class="input" type="number" data-field="targetMargin" value="{{form.targetMargin}}" bindinput="onNumberInput" />
+        </view>
+      </view>
+    </view>
+
+    <view class="section">
+      <view class="section-title">实时因子</view>
+      <view class="slider-card">
+        <view class="slider-head">
+          <text>需求热度</text>
+          <text>{{form.demand}}</text>
+        </view>
+        <slider min="0" max="100" step="1" value="{{form.demand}}" activeColor="#1a73e8" backgroundColor="#dadce0" block-size="22" data-field="demand" bindchanging="onSliderChange" bindchange="onSliderChange" />
+      </view>
+      <view class="slider-card">
+        <view class="slider-head">
+          <text>库存水平</text>
+          <text>{{form.inventory}}</text>
+        </view>
+        <slider min="0" max="100" step="1" value="{{form.inventory}}" activeColor="#1a73e8" backgroundColor="#dadce0" block-size="22" data-field="inventory" bindchanging="onSliderChange" bindchange="onSliderChange" />
+      </view>
+      <picker mode="selector" range="{{channelOptions}}" value="{{form.channelIndex}}" data-field="channelIndex" bindchange="onPickerChange">
+        <view class="picker"><text>销售渠道</text><text>{{plan.labels.channel}}</text></view>
       </picker>
       <picker mode="selector" range="{{timeOptions}}" value="{{form.timeIndex}}" data-field="timeIndex" bindchange="onPickerChange">
-        <view class="picker">
-          <text class="label">时段场景</text>
-          <text>{{timeLabel}}</text>
-        </view>
+        <view class="picker"><text>时段场景</text><text>{{plan.labels.timeScene}}</text></view>
       </picker>
       <picker mode="selector" range="{{tierOptions}}" value="{{form.tierIndex}}" data-field="tierIndex" bindchange="onPickerChange">
-        <view class="picker">
-          <text class="label">用户身份</text>
-          <text>{{tierLabel}}</text>
-        </view>
+        <view class="picker"><text>用户身份</text><text>{{plan.labels.userTier}}</text></view>
       </picker>
     </view>
+
+    <view class="section">
+      <view class="section-title">快速场景</view>
+      <view class="scenario-grid">
+        <button class="scenario" data-type="peak" bindtap="applyScenario">晚高峰</button>
+        <button class="scenario" data-type="clearance" bindtap="applyScenario">清库存</button>
+        <button class="scenario" data-type="holiday" bindtap="applyScenario">节假日</button>
+      </view>
+    </view>
   </view>
 
-  <view class="section">
-    <view class="section-title">快速场景</view>
-    <view class="scenario-row">
-      <button class="scenario" data-type="peak" bindtap="applyScenario">晚高峰</button>
-      <button class="scenario" data-type="clearance" bindtap="applyScenario">清库存</button>
-      <button class="scenario" data-type="holiday" bindtap="applyScenario">节假日</button>
+  <view wx:if="{{activeTab === 'insight'}}">
+    <view class="section">
+      <view class="section-title">因子贡献</view>
+      <view class="factor-row" wx:for="{{plan.factors}}" wx:key="name">
+        <view>
+          <view class="factor-name">{{item.name}}</view>
+          <view class="factor-value">{{item.value}}</view>
+        </view>
+        <view class="factor-effect">{{item.effect}}</view>
+      </view>
+    </view>
+    <view class="section">
+      <view class="section-title">策略解释</view>
+      <view class="reason" wx:for="{{plan.reasons}}" wx:key="*this">{{item}}</view>
+    </view>
+    <view class="section" wx:if="{{plan.warnings.length}}">
+      <view class="section-title">风险提示</view>
+      <view class="warning" wx:for="{{plan.warnings}}" wx:key="*this">{{item}}</view>
     </view>
   </view>
 
-  <view class="section">
-    <view class="section-title">策略解释</view>
-    <view class="range">保护价 ¥{{result.minPrice}} ｜ 上限价 ¥{{result.maxPrice}}</view>
-    <view class="reason" wx:for="{{result.reasons}}" wx:key="*this">{{item}}</view>
-  </view>
-
-  <view class="section">
-    <view class="section-head">
-      <view class="section-title">策略数据</view>
-      <view class="action-row">
-        <button class="copy-btn ghost" bindtap="savePricing">保存</button>
-        <button class="copy-btn" bindtap="copyStrategy">复制</button>
+  <view wx:if="{{activeTab === 'history'}}">
+    <view class="section">
+      <view class="history-head">
+        <view class="section-title">最近保存</view>
+        <button class="text-button" wx:if="{{savedPlans.length}}" bindtap="clearHistory">清空</button>
       </view>
-    </view>
-    <view class="json-box">{{strategyJson}}</view>
-  </view>
-
-  <view class="section" wx:if="{{savedPlans.length}}">
-    <view class="section-title">最近保存</view>
-    <view class="history-item" wx:for="{{savedPlans}}" wx:key="id">
-      <view>
-        <view class="history-title">{{item.productName}}</view>
-        <view class="history-meta">{{item.timeScene}} ｜ {{item.channel}} ｜ {{item.userTier}}</view>
+      <view class="empty" wx:if="{{!savedPlans.length}}">暂无保存记录</view>
+      <view class="history-item" wx:for="{{savedPlans}}" wx:key="id">
+        <view>
+          <view class="history-title">{{item.productName}}</view>
+          <view class="history-meta">{{item.labels.timeScene}} · {{item.labels.channel}} · {{item.labels.userTier}}</view>
+        </view>
+        <view class="history-price">¥{{item.output.suggestedPrice}}</view>
       </view>
-      <view class="history-price">¥{{item.output.suggestedPrice}}</view>
     </view>
   </view>
 </view>
